@@ -11,6 +11,8 @@ $ node_modules/mecab-ya/bin/install-mecab.sh ko
 $ npm start
 ```
 
+And then open [http://localhost:3000](http://localhost:3000)
+
 # License
 
 MIT
