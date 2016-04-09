@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src='javascripts/wordcloud2.js'></script>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+  </head>
+  <body>
+    {{{body}}}
+  </body>
+
+  <script>
+        var cloudOptions = {
+            gridSize: 8,
+            weightFactor: 26,
+            fontFamily: 'serif',
+            color: 'random-light',
+            backgroundColor: '#333',
+            rotateRatio: 0
+        };
+
+        var countWord = function (words) {
+            var words = words.reduce(function (result, word) {
+                if (result[word] == undefined) {
+                    result[word] = 1;
+                } else {
+                    result[word]++;
+                }
+
+                return result;
+            }, {});
+
+            var wordAndCount = [];
+            for (var word in words) {
+                wordAndCount.push([word, words[word]]);
+            }
+
+            return wordAndCount;
+        };
+
+        var refreshCloud = function (words) {
+            cloudOptions.list = countWord(words);
+            cloudOptions.weightFactor = $('#weightFactor').val();
+
+            WordCloud($('#canvas')[0], cloudOptions);
+        };
+
+        var reloadCloud = function (text) {
+            $.post('/nouns', {text: text})
+                .done(function(data) {
+                    refreshCloud(data);
+                });
+        };
+
+        $("#reload").click(function(){
+            reloadCloud($('#text').val());
+        });
+
+        $(document).ready(function() {
+            reloadCloud($('#text').val());
+        });
+    </script>
+</html>
