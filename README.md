@@ -7,7 +7,8 @@ And it's only considered Korean language.
 ## Usage
 
 ```bash
-$ node_modules/mecab-ya/bin/install-mecab.sh ko
+$ npm install && npm install --save mecab-ya
+$ node_modules/mecab-ya/bin/install-mecab ko
 $ npm start
 ```
 
